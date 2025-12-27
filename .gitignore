@@ -1,0 +1,86 @@
+/.settings
+.classpath
+.project
+/bin
+/target
+/lib
+/resources
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# IDE
+## IntelliJ IDEA
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+
+## Eclipse
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+
+## NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+## VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+apidoc/
+logs/
+*.log
+!logs/.gitkeep
+
+# Luyten specific (if there are any specific build artifacts)
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Temporary files
+*.tmp
+*.temp
+*~
+.DS_Store
+desktop.ini
+
+# User-specific settings
+*.user
+*.sublime-project
+*.sublime-workspace
