@@ -11,8 +11,8 @@ import java.io.File;
  */
 public class CodeResurrectorOsx extends CodeResurrector {
     public static void main(String[] args) {
-        // Add an adapter as the handler to a new instance of the application
-        // class
+        // 为应用程序类的新实例添加适配器作为处理器
+        // 类
         @SuppressWarnings("deprecation")
         Application app = new Application();
         app.addApplicationListener(new ApplicationAdapter() {
@@ -26,7 +26,7 @@ public class CodeResurrectorOsx extends CodeResurrector {
             }
         });
 
-        // Call the superclass's main function
+        // 调用父类的主函数
         CodeResurrector.main(args);
     }
 }

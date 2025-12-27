@@ -55,10 +55,8 @@ public class BytecodeCache {
                 JarEntry entry = currentJarFile.getJarEntry(entryName);
                 if (entry != null) {
                     byte[] bytecode = readBytesFromEntry(currentJarFile, entry);
-                    if (bytecode != null) {
-                        cache.put(internalName, bytecode);
-                        return bytecode;
-                    }
+                    cache.put(internalName, bytecode);
+                    return bytecode;
                 }
             } catch (Exception e) {
                 // 读取失败

@@ -1,5 +1,6 @@
 package com.bingbaihanji.code.resurrector;
 
+import com.bingbaihanji.code.resurrector.view.MainWindow;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ import java.net.SocketException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -92,7 +94,7 @@ public class CodeResurrector {
             public void run() {
                 FlatMacDarkLaf.setup();
                 if (!mainWindowRef.compareAndSet(null, new MainWindow(fileFromCommandLine))) {
-                    // Already set - so add the files to open
+                    // 已经设置 - 因此添加要打开的文件
                     addToPendingFiles(fileFromCommandLine);
                 }
                 processPendingFiles();
@@ -102,7 +104,7 @@ public class CodeResurrector {
     }
 
     private static void launchServer() {
-        try { // Server
+        try { // 服务器
             while (true) {
                 try {
                     Socket socket = lockSocket.accept();
@@ -116,7 +118,7 @@ public class CodeResurrector {
                     break;
                 }
             }
-        } catch (IOException e) { // Client
+        } catch (IOException e) { // 客户端
             // 忽略关闭时的异常
         }
     }
@@ -169,7 +171,7 @@ public class CodeResurrector {
         try {
             String line;
             BufferedReader br = new BufferedReader(new InputStreamReader(
-                    ClassLoader.getSystemResourceAsStream("META-INF/maven/us.deathmarine/luyten/pom.properties")));
+                    Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("META-INF/maven/us.deathmarine/luyten/pom.properties"))));
             while ((line = br.readLine()) != null) {
                 if (line.contains("version"))
                     result = line.split("=")[1];
@@ -211,7 +213,7 @@ public class CodeResurrector {
         } else {
             pane.add(new JLabel(message));
         }
-        pane.add(new JLabel(" \n")); // Whitespace
+        pane.add(new JLabel(" \n")); // 空白
         final JTextArea exception = new JTextArea(25, 100);
         exception.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 10));
         exception.setText(stacktrace);

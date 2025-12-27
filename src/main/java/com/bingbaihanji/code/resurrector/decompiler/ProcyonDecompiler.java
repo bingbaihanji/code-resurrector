@@ -1,7 +1,7 @@
 package com.bingbaihanji.code.resurrector.decompiler;
 
-import com.bingbaihanji.code.resurrector.ConfigSaver;
-import com.bingbaihanji.code.resurrector.LuytenTypeLoader;
+import com.bingbaihanji.code.resurrector.core.ConfigSaver;
+import com.bingbaihanji.code.resurrector.core.LuytenTypeLoader;
 import com.strobel.assembler.metadata.MetadataSystem;
 import com.strobel.assembler.metadata.TypeDefinition;
 import com.strobel.assembler.metadata.TypeReference;
@@ -40,7 +40,7 @@ public class ProcyonDecompiler implements IDecompiler {
 
     @Override
     public String decompile(String classFilePath, byte[] classBytes) throws Exception {
-        // Procyon使用内部名称 (例如: java/lang/String)
+        // Procyon 使用内部名称 (例如: java/lang/String)
         String internalName = classFilePath.replace(".class", "");
         return decompileType(internalName, classBytes);
     }
@@ -73,7 +73,7 @@ public class ProcyonDecompiler implements IDecompiler {
 
     @Override
     public void cleanup() {
-        // Procyon资源清理
+        // Procyon 资源清理
         if (typeLoader != null) {
             typeLoader.getTypeLoaders().clear();
         }

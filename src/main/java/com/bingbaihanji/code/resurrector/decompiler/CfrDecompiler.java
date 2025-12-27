@@ -38,10 +38,10 @@ public class CfrDecompiler implements IDecompiler {
         options.put("showops", "false");                // 不显示操作码
         options.put("silent", "true");                  // 静默模式
         options.put("recover", "true");                 // 恢复模式
-        options.put("eclipse", "true");                 // Eclipse兼容
+        options.put("eclipse", "true");                 // Eclipse 兼容
         options.put("override", "true");                // 显示@Override
         options.put("showinferrable", "true");          // 显示可推断泛型
-        options.put("stringbuilder", "true");           // StringBuilder优化
+        options.put("stringbuilder", "true");           // StringBuilder 优化
         options.put("stringconcat", "true");            // 字符串连接优化
         options.put("tryresources", "true");            // try-with-resources
         options.put("recordtypes", "true");             // record类型支持

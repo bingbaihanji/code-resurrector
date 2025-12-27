@@ -27,35 +27,35 @@ public class VineflowerDecompiler implements IDecompiler {
     @Override
     public void initialize() {
         options = new HashMap<>();
-        // Vineflower高级选项配置 - 优化lambda和泛型支持
-        options.put("den", "1");  // decompile enumerations
-        options.put("dgs", "1");  // decompile generic signatures
-        options.put("din", "1");  // decompile inner classes
-        options.put("rbr", "1");  // remove bridge methods
-        options.put("rsy", "1");  // remove synthetic methods
-        options.put("bto", "1");  // interpret int 1 as boolean true
-        options.put("nns", "1");  // hide not set synthetic
-        options.put("uto", "0");  // treat unknown as Object - disabled for better type inference
+        // Vineflower 高级选项配置 - 优化 lambda 和泛型支持
+        options.put("den", "1");  // 反编译枚举
+        options.put("dgs", "1");  // 反编译泛型签名
+        options.put("din", "1");  // 反编译内部类
+        options.put("rbr", "1");  // 移除桥接方法
+        options.put("rsy", "1");  // 移除合成方法
+        options.put("bto", "1");  // 将 int 1 解释为布尔 true
+        options.put("nns", "1");  // 隐藏未设置的合成
+        options.put("uto", "0");  // 将未知视为 Object - 为更好的类型推断而禁用
         options.put("udv", "1");  // use debug var names
         options.put("ump", "1");  // use method parameters
-        options.put("fdi", "1");  // decompile finally
-        options.put("asc", "0");  // ASCII string encoding - disabled for UTF-8
-        options.put("rer", "1");  // remove empty ranges
-        options.put("rgn", "1");  // remove getClass() for lambda
-        options.put("lit", "1");  // output numeric literals
+        options.put("fdi", "1");  // 反编译 finally
+        options.put("asc", "0");  // ASCII 字符串编码 - 为 UTF-8 禁用
+        options.put("rer", "1");  // 移除空范围
+        options.put("rgn", "1");  // 为 lambda 移除 getClass()
+        options.put("lit", "1");  // 输出数值字面量
         options.put("bsm", "1");  // use lambdas (not anonymous classes)
         options.put("mpm", "60"); // max processing method time (60s)
-        options.put("lac", "0");  // DO NOT decompile lambda to anonymous classes
+        options.put("lac", "0");  // 不要将 lambda 反编译为匿名类
         options.put("nls", "1");  // new line separator
-        options.put("ind", "    "); // indentation
-        options.put("log", "WARN"); // log level
-        options.put("pll", "130"); // preferred line length
+        options.put("ind", "    "); // 缩进
+        options.put("log", "WARN"); // 日志级别
+        options.put("pll", "130"); // 偏好的行长度
         // Java 16+ 特性
-        options.put("rec", "1");  // decompile records
-        options.put("sea", "1");  // decompile sealed classes
-        options.put("pam", "1");  // decompile pattern matching
-        options.put("swi", "1");  // decompile switch expressions
-        options.put("vac", "1");  // decompile var in catch
+        options.put("rec", "1");  // 反编译 records
+        options.put("sea", "1");  // 反编译 sealed classes
+        options.put("pam", "1");  // 反编译模式匹配
+        options.put("swi", "1");  // 反编译 switch 表达式
+        options.put("vac", "1");  // 反编译 catch 中的 var
     }
 
     @Override
@@ -174,7 +174,7 @@ public class VineflowerDecompiler implements IDecompiler {
             if (tempClassFile != null && tempClassFile.exists()) {
                 tempClassFile.delete();
             }
-            if (tempDir != null && tempDir.exists()) {
+            if (tempDir.exists()) {
                 tempDir.delete();
             }
         }
