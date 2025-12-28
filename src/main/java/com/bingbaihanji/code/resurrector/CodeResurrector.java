@@ -246,7 +246,7 @@ public class CodeResurrector {
         scroll.setBorder(new CompoundBorder(BorderFactory.createTitledBorder("堆栈跟踪"),
                 new BevelBorder(BevelBorder.LOWERED)));
         pane.add(scroll);
-        final String issue = "https://github.com/deathmarine/Luyten/issues";
+        final String issue = "https://github.com/bingbaihanji/fxgeometric-view/issues";
         final JLabel link = new JLabel("<HTML>Submit to <FONT color=\"#000099\"><U>" + issue + "</U></FONT></HTML>");
         link.setCursor(new Cursor(Cursor.HAND_CURSOR));
         link.addMouseListener(new MouseAdapter() {
