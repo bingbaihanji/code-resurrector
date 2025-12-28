@@ -24,6 +24,9 @@ import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.Theme;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
+import com.bingbaihanji.code.resurrector.util.IconResourceManager;
+import com.bingbaihanji.code.resurrector.view.panel.WindowManager;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -125,6 +128,19 @@ public class Model extends JSplitPane {
             }
         });
 
+        // 添加右键菜单支持弹出独立窗口
+        house.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                showTabPopupMenu(e);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                showTabPopupMenu(e);
+            }
+        });
+
         KeyStroke sfuncF4 = KeyStroke.getKeyStroke(KeyEvent.VK_F4, Keymap.ctrlDownModifier(), false);
         mainWindow.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(sfuncF4, "CloseTab");
 
@@ -216,6 +232,103 @@ public class Model extends JSplitPane {
         house.remove(co);
         if (open != null)
             open.close();
+    }
+
+    /**
+     * 显示标签页右键菜单
+     */
+    private void showTabPopupMenu(MouseEvent e) {
+        if (!e.isPopupTrigger()) return;
+
+        int tabIndex = house.indexAtLocation(e.getX(), e.getY());
+        if (tabIndex < 0) return;
+
+        JPopupMenu popup = new JPopupMenu();
+
+        // 弹出为独立窗口
+        JMenuItem popOutItem = new JMenuItem("弹出为独立窗口");
+        popOutItem.addActionListener(ev -> popOutToFloatingWindow(tabIndex));
+        popup.add(popOutItem);
+
+        popup.addSeparator();
+
+        // 关闭标签
+        JMenuItem closeItem = new JMenuItem("关闭");
+        closeItem.addActionListener(ev -> closeOpenTab(tabIndex));
+        popup.add(closeItem);
+
+        // 关闭其他
+        JMenuItem closeOthersItem = new JMenuItem("关闭其他");
+        closeOthersItem.addActionListener(ev -> {
+            for (int i = house.getTabCount() - 1; i >= 0; i--) {
+                if (i != tabIndex) {
+                    closeOpenTab(i);
+                }
+            }
+        });
+        popup.add(closeOthersItem);
+
+        // 关闭全部
+        JMenuItem closeAllItem = new JMenuItem("关闭全部");
+        closeAllItem.addActionListener(ev -> {
+            while (house.getTabCount() > 0) {
+                closeOpenTab(0);
+            }
+        });
+        popup.add(closeAllItem);
+
+        popup.show(house, e.getX(), e.getY());
+    }
+
+    /**
+     * 将标签页弹出为独立窗口
+     */
+    public void popOutToFloatingWindow(int tabIndex) {
+        if (tabIndex < 0 || tabIndex >= house.getTabCount()) return;
+
+        // 获取 OpenFile
+        RTextScrollPane scrollPane = (RTextScrollPane) house.getComponentAt(tabIndex);
+        RSyntaxTextArea textArea = (RSyntaxTextArea) scrollPane.getViewport().getView();
+        OpenFile openFile = null;
+
+        for (OpenFile file : hmap) {
+            if (textArea.equals(file.textArea)) {
+                openFile = file;
+                break;
+            }
+        }
+
+        if (openFile == null) return;
+
+        // 从标签页移除
+        house.remove(tabIndex);
+        // 不从 hmap 移除，保持引用
+
+        // 创建浮动窗口
+        WindowManager.FloatingCodeWindow floatingWindow =
+            WindowManager.getInstance().createFloatingCodeWindow(openFile, getTheme());
+
+        // 设置窗口关闭时将标签页返回主窗口
+        final OpenFile finalOpenFile = openFile;
+        floatingWindow.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // 将 OpenFile 返回到主窗口
+                addOrSwitchToTab(finalOpenFile);
+            }
+        });
+
+        floatingWindow.setVisible(true);
+    }
+
+    /**
+     * 将当前标签页弹出为独立窗口
+     */
+    public void popOutCurrentToFloatingWindow() {
+        int selectedIndex = house.getSelectedIndex();
+        if (selectedIndex >= 0) {
+            popOutToFloatingWindow(selectedIndex);
+        }
     }
 
     private String getName(String path) {

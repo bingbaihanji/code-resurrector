@@ -12,6 +12,7 @@ import com.bingbaihanji.code.resurrector.model.RecentFiles;
 import com.bingbaihanji.code.resurrector.model.WindowPosition;
 import com.bingbaihanji.code.resurrector.ui.component.MainMenuBar;
 import com.bingbaihanji.code.resurrector.util.IconResourceManager;
+import com.bingbaihanji.code.resurrector.view.panel.WindowManager;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 
 import javax.swing.*;
@@ -424,6 +425,60 @@ public class MainWindow extends javax.swing.JFrame {
 
     public void onNavigationRequest(String uniqueStr) {
         this.getSelectedModel().navigateTo(uniqueStr);
+    }
+
+    /**
+     * 弹出当前代码为独立窗口
+     */
+    public void onPopOutCodeWindow() {
+        Model model = this.getSelectedModel();
+        if (model != null) {
+            model.popOutCurrentToFloatingWindow();
+        }
+    }
+
+    /**
+     * 关闭所有浮动窗口
+     */
+    public void onCloseAllFloatingWindows() {
+        WindowManager.getInstance().closeAllFloatingWindows();
+    }
+
+    /**
+     * 关闭当前标签页
+     */
+    public void onCloseCurrentTab() {
+        Model model = this.getSelectedModel();
+        if (model != null && model.house.getTabCount() > 0) {
+            model.closeOpenTab(model.house.getSelectedIndex());
+        }
+    }
+
+    /**
+     * 关闭其他标签页
+     */
+    public void onCloseOtherTabs() {
+        Model model = this.getSelectedModel();
+        if (model != null) {
+            int currentIndex = model.house.getSelectedIndex();
+            for (int i = model.house.getTabCount() - 1; i >= 0; i--) {
+                if (i != currentIndex) {
+                    model.closeOpenTab(i);
+                }
+            }
+        }
+    }
+
+    /**
+     * 关闭所有标签页
+     */
+    public void onCloseAllTabs() {
+        Model model = this.getSelectedModel();
+        if (model != null) {
+            while (model.house.getTabCount() > 0) {
+                model.closeOpenTab(0);
+            }
+        }
     }
 
     private void adjustWindowPositionBySavedState() {

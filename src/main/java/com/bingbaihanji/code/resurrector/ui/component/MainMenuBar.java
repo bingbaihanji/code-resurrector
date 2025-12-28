@@ -70,6 +70,9 @@ public class MainMenuBar extends JMenuBar {
         final JMenu editMenu = new JMenu("编辑");
         editMenu.add(new JMenuItem("..."));
         this.add(editMenu);
+        final JMenu viewMenu = new JMenu("视图");
+        viewMenu.add(new JMenuItem("..."));
+        this.add(viewMenu);
         final JMenu themesMenu = new JMenu("主题");
         themesMenu.add(new JMenuItem("..."));
         this.add(themesMenu);
@@ -93,6 +96,9 @@ public class MainMenuBar extends JMenuBar {
 
                     buildEditMenu(editMenu);
                     refreshMenuPopup(editMenu);
+
+                    buildViewMenu(viewMenu);
+                    refreshMenuPopup(viewMenu);
 
                     buildThemesMenu(themesMenu);
                     refreshMenuPopup(themesMenu);
@@ -327,6 +333,68 @@ public class MainMenuBar extends JMenuBar {
             }
         });
         editMenu.add(menuItem);
+    }
+
+    private void buildViewMenu(JMenu viewMenu) {
+        viewMenu.removeAll();
+
+        // 弹出当前代码为独立窗口
+        JMenuItem popOutItem = new JMenuItem("弹出代码为独立窗口");
+        popOutItem.setAccelerator(
+                KeyStroke.getKeyStroke(KeyEvent.VK_P, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask() | InputEvent.SHIFT_DOWN_MASK));
+        popOutItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainWindow.onPopOutCodeWindow();
+            }
+        });
+        viewMenu.add(popOutItem);
+
+        viewMenu.addSeparator();
+
+        // 关闭所有浮动窗口
+        JMenuItem closeFloatingItem = new JMenuItem("关闭所有浮动窗口");
+        closeFloatingItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainWindow.onCloseAllFloatingWindows();
+            }
+        });
+        viewMenu.add(closeFloatingItem);
+
+        viewMenu.addSeparator();
+
+        // 关闭当前标签页
+        JMenuItem closeTabItem = new JMenuItem("关闭当前标签页");
+        closeTabItem.setAccelerator(
+                KeyStroke.getKeyStroke(KeyEvent.VK_W, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+        closeTabItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainWindow.onCloseCurrentTab();
+            }
+        });
+        viewMenu.add(closeTabItem);
+
+        // 关闭其他标签页
+        JMenuItem closeOtherTabsItem = new JMenuItem("关闭其他标签页");
+        closeOtherTabsItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainWindow.onCloseOtherTabs();
+            }
+        });
+        viewMenu.add(closeOtherTabsItem);
+
+        // 关闭所有标签页
+        JMenuItem closeAllTabsItem = new JMenuItem("关闭所有标签页");
+        closeAllTabsItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainWindow.onCloseAllTabs();
+            }
+        });
+        viewMenu.add(closeAllTabsItem);
     }
 
     private void buildThemesMenu(JMenu themesMenu) {

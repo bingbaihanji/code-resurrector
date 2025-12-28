@@ -37,10 +37,10 @@ public class OpenFile implements SyntaxConstants {
     private final ConfigSaver configSaver;
     private final LuytenPreferences luytenPrefs;
     MainWindow mainWindow;
-    RTextScrollPane scrollPane;
-    RSyntaxTextArea textArea;
-    String name;
-    String path;
+    public RTextScrollPane scrollPane;
+    public RSyntaxTextArea textArea;
+    public String name;
+    public String path;
     // 导航链接
     private TreeMap<Selection, String> selectionToUniqueStrTreeMap = new TreeMap<>();
     private volatile boolean isContentValid = false;
